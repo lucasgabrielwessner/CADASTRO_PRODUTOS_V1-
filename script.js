@@ -1,12 +1,41 @@
 class Produto {
+    #preco;
+    #quantidade;
+
     constructor(nome, preco, quantidade) {
-        this.nome = nome;
-        this.preco = parseFloat(preco);
-        this.quantidade = parseInt(quantidade);
+        // Converter valores
+        const precoNum = parseFloat(preco);
+        const quantidadeNum = parseInt(quantidade, 10);
+
+        // Validações com lançamentos de Erro
+        if (!nome || nome.trim() === "") {
+            throw new Error("O nome do produto não pode estar vazio.");
+        }
+
+        if (isNaN(precoNum) || precoNum <= 0) {
+            throw new Error("O preço deve ser um número maior que zero.");
+        }
+
+        if (isNaN(quantidadeNum) || quantidadeNum < 0) {
+            throw new Error("A quantidade deve ser um número inteiro maior ou igual a zero.");
+        }
+
+        this.nome = nome.trim();
+        this.#preco = precoNum;
+        this.#quantidade = quantidadeNum;
+    }
+
+    // Getters necessários para acessar os atributos privados na renderização
+    get preco() {
+        return this.#preco;
+    }
+
+    get quantidade() {
+        return this.#quantidade;
     }
 
     calcularSubtotal() {
-        return this.preco * this.quantidade;
+        return this.#preco * this.#quantidade;
     }
 }
 
@@ -20,17 +49,23 @@ const btnLimpar = document.getElementById("limpar-tabela");
 formProduto.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    const nome = document.getElementById("nome").value.trim();
+    const nome = document.getElementById("nome").value;
     const preco = document.getElementById("preco").value;
     const quantidade = document.getElementById("quantidade").value;
 
-    const novoProduto = new Produto(nome, preco, quantidade);
+    // Bloco try...catch para capturar os erros lançados pelo Produto
+    try {
+        const novoProduto = new Produto(nome, preco, quantidade);
 
-    listaDeProdutos.push(novoProduto);
+        listaDeProdutos.push(novoProduto);
 
-    renderizarTabela();
+        renderizarTabela();
 
-    formProduto.reset();
+        formProduto.reset();
+    } catch (error) {
+        // Exibe o erro para o usuário sem travar a aplicação
+        alert(`Erro ao cadastrar produto: ${error.message}`);
+    }
 });
 
 function renderizarTabela() {
