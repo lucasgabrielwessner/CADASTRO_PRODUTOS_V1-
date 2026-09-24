@@ -9,66 +9,77 @@
 </head>
 
 <body>
+    <header>
 
-    <div class="container">
+    </header>
 
-        <h1>Cadastro de Produtos</h1>
+    <main>
 
-        <form id="produto-form">
+        <div class="container">
 
-            <div class="form-group">
-                <label for="nome">Nome do Produto:</label>
-                <input type="text" id="nome" placeholder="Ex.: Notebook" required>
+            <h1>Cadastro de Produtos</h1>
+
+            <form id="produto-form">
+
+                <div class="form-group">
+                    <label for="nome">Nome do Produto:</label>
+                    <input type="text" id="nome" placeholder="Ex.: Notebook" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="preco">Preço (R$):</label>
+                    <input type="number" id="preco" placeholder="Ex.: 3500.00" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantidade">Quantidade:</label>
+                    <input type="number" id="quantidade" placeholder="Ex.: 5" required>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    Adicionar Produto
+                </button>
+
+            </form>
+
+            <div class="resumo-container">
+
+                <h3 id="total-estoque">
+                    Total em Estoque: R$ 0,00
+                </h3>
+
+                <button id="limpar-tabela" class="btn-danger" type="button">
+                    Limpar Tudo
+                </button>
+
             </div>
 
-            <div class="form-group">
-                <label for="preco">Preço (R$):</label>
-                <input type="number" id="preco" placeholder="Ex.: 3500.00" required>
-            </div>
+            <table id="tabela-produtos">
 
-            <div class="form-group">
-                <label for="quantidade">Quantidade:</label>
-                <input type="number" id="quantidade" placeholder="Ex.: 5" required>
-            </div>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Preço Un.</th>
+                        <th>Qtd.</th>
+                        <th>Subtotal</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
 
-            <button type="submit" class="btn-primary">
-                Adicionar Produto
-            </button>
+                <tbody>
+                </tbody>
 
-        </form>
-
-        <div class="resumo-container">
-
-            <h3 id="total-estoque">
-                Total em Estoque: R$ 0,00
-            </h3>
-
-            <button id="limpar-tabela" class="btn-danger" type="button">
-                Limpar Tudo
-            </button>
+            </table>
 
         </div>
 
-        <table id="tabela-produtos">
+        <script src="script.js"></script>
 
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Preço Un.</th>
-                    <th>Qtd.</th>
-                    <th>Subtotal</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
+    </main>
 
-            <tbody>
-            </tbody>
-
-        </table>
-
-    </div>
-
-    <script src="script.js"></script>
+    <footer>
+        <p>&copy; 2026 - Desenvolvido por Lucas Gabriel Vieira Wessner |</p>
+    </footer>
 
 </body>
 
