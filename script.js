@@ -59,6 +59,7 @@ formProduto.addEventListener("submit", function (event) {
 
         listaDeProdutos.push(novoProduto);
 
+        salvarNoLocalStorage();
         renderizarTabela();
 
         formProduto.reset();
@@ -85,7 +86,7 @@ function renderizarTabela() {
                 </button>
             </td>
         `;
-
+        salvarNoLocalStorage();
         tabelaBody.appendChild(linha);
     });
 
@@ -108,6 +109,7 @@ tabelaBody.addEventListener("click", function (event) {
 
         listaDeProdutos.splice(index, 1);
 
+        salvarNoLocalStorage();
         renderizarTabela();
     }
 });
@@ -116,5 +118,36 @@ tabelaBody.addEventListener("click", function (event) {
 btnLimpar.addEventListener("click", function () {
     listaDeProdutos.length = 0;
 
+    salvarNoLocalStorage();
     renderizarTabela();
 });
+
+
+function salvarNoLocalStorage() {
+    // Não dá pra salvar a classe com #privado, então salvamos só os dados
+    const dadosParaSalvar = listaDeProdutos.map(p => ({
+        nome: p.nome,
+        preco: p.preco,
+        quantidade: p.quantidade
+    }));
+    localStorage.setItem('meusProdutos', JSON.stringify(dadosParaSalvar));
+}
+
+function carregarDoLocalStorage() {
+    const salvos = JSON.parse(localStorage.getItem('meusProdutos') || '[]');
+
+    // Recria os objetos usando a sua classe de novo para ter validação
+    salvos.forEach(item => {
+        try {
+            const produto = new Produto(item.nome, item.preco, item.quantidade);
+            listaDeProdutos.push(produto);
+        } catch (e) {
+            console.log("Produto salvo inválido ignorado:", e.message);
+        }
+    });
+
+    renderizarTabela(); // renderiza o que carregou
+}
+
+// CHAMA O CARREGAMENTO ASSIM QUE ABRE A PÁGINA
+carregarDoLocalStorage();
